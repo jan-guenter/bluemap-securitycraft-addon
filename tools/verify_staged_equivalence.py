@@ -50,7 +50,10 @@ def main() -> int:
             actual_digest = hashlib.sha256(archive.read(entry)).hexdigest()
             if actual_digest != expected_digest:
                 changed.append((entry, expected_digest, actual_digest))
-        manifest = archive.read(IGNORED_ENTRY).decode("utf-8")
+        try:
+            manifest = archive.read(IGNORED_ENTRY).decode("utf-8")
+        except KeyError:
+            raise SystemExit(f"Final JAR is missing {IGNORED_ENTRY}") from None
 
     if changed:
         detail = "\n".join(

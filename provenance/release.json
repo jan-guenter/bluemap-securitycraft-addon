@@ -22,8 +22,8 @@
     },
     "sources_jar": {
       "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1-sources.jar",
-      "size": 18980,
-      "sha256": "16fe28fa717957584d3f18ff51773125fdf0fdbb2849703ddc623b9280c6dced"
+      "size": 18804,
+      "sha256": "71ba8c65532c6640b28f484aa1ef2d7900e563e7f37474d855ae01db21372694"
     },
     "pom": {
       "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.pom",
@@ -33,12 +33,12 @@
     "gradle_module": {
       "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.module.json",
       "size": 2859,
-      "sha256": "d58416616fbb0c3eb59e8c3bb77186b5069acf384bbaa73bc5dd064565b5e7b3"
+      "sha256": "2d705130f94b9d5a2ce1a63577d3907f71ec0d225745df957e4398e3e7547ab9"
     },
     "sha256sums": {
       "file_name": "SHA256SUMS",
       "size": 472,
-      "sha256": "511c11ff89db161e3fbdc6465fcadbc4f22177f963102245efd097ff0865ef7b"
+      "sha256": "c2d13f8fe04c994491777480b8ee2e71889c8aedd5bd1b9940faa19620340878"
     }
   },
   "staged_equivalence": {

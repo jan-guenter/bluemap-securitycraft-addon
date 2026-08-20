@@ -122,14 +122,14 @@ jobs:
             "build/libs/bluemap-securitycraft-addon-${VERSION}.jar")" -eq 33345
           test "$(stat -c %s \
             "build/libs/bluemap-securitycraft-addon-${VERSION}-sources.jar")" \
-            -eq 18980
+            -eq 18804
           test "$(stat -c %s build/publications/addon/pom-default.xml)" -eq 1370
           test "$(stat -c %s build/publications/addon/module.json)" -eq 2859
           sha256sum --check <<SHA256SUMS
           4caccbbfaf9d413ae7d60e926069812e09da182adeb907ec2475083904d096e4  build/libs/bluemap-securitycraft-addon-${VERSION}.jar
-          16fe28fa717957584d3f18ff51773125fdf0fdbb2849703ddc623b9280c6dced  build/libs/bluemap-securitycraft-addon-${VERSION}-sources.jar
+          71ba8c65532c6640b28f484aa1ef2d7900e563e7f37474d855ae01db21372694  build/libs/bluemap-securitycraft-addon-${VERSION}-sources.jar
           68bcd52d29167f03065d94a11f4aa2ee2530acfe2e7572df2ed8ca88b098223e  build/publications/addon/pom-default.xml
-          d58416616fbb0c3eb59e8c3bb77186b5069acf384bbaa73bc5dd064565b5e7b3  build/publications/addon/module.json
+          2d705130f94b9d5a2ce1a63577d3907f71ec0d225745df957e4398e3e7547ab9  build/publications/addon/module.json
           SHA256SUMS
           python3 tools/verify_staged_equivalence.py \
             --jar "build/libs/bluemap-securitycraft-addon-${VERSION}.jar" \

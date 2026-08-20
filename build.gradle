@@ -93,6 +93,7 @@ tasks.named('jar', Jar).configure {
 }
 
 tasks.named('sourcesJar', Jar).configure {
+    includeEmptyDirs = false
     from('LICENSE') {
         into 'META-INF'
         rename { 'LICENSE-bluemap-securitycraft-addon' }

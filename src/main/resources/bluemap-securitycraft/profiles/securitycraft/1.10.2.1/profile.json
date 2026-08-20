@@ -1,0 +1,12 @@
+{
+  "schema": 1,
+  "mod_id": "securitycraft",
+  "version": "1.10.2.1",
+  "jar_size": 5193371,
+  "jar_sha256": "75ac9e73c60caf58df7069f167dbacc00a640e1418207dff654f56a5fdb5f229",
+  "minecraft": "1.21.1",
+  "neoforge": "21.1.248",
+  "route_id": "securitycraft-disguises",
+  "routed_hosts": 31,
+  "feature": "persisted-disguise-module-material-replacement"
+}

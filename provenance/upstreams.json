@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "project_license": "MIT",
+  "modules": [
+    {
+      "path": "src/main/java/**",
+      "lane": "independently-authored-resource-interpreter",
+      "spdx": "MIT",
+      "notes": "No SecurityCraft or BlueMap implementation code is bundled."
+    }
+  ],
+  "evidence": [
+    {
+      "project": "SecurityCraft",
+      "mod_id": "securitycraft",
+      "version": "1.10.2.1",
+      "artifact_bytes": 5193371,
+      "artifact_sha256": "75ac9e73c60caf58df7069f167dbacc00a640e1418207dff654f56a5fdb5f229",
+      "artifact_tier": "T2_ARTIFACT_EXACT",
+      "source_commit": "d346c4ff",
+      "source_tier": "T5_REFERENCE_ONLY",
+      "source_use": "registry and persisted-data field identity reference only",
+      "redistributed": false
+    },
+    {
+      "project": "BlueMap",
+      "version": "5.22-agent.backport-5.22-mc1.21.1-2",
+      "commit": "9be321df995a1103808621d529eb72773e719d4d",
+      "license": "MIT",
+      "use": "compile-only internal API",
+      "redistributed": false
+    }
+  ]
+}

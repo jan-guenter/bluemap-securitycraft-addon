@@ -1,0 +1,13 @@
+.gradle/
+build/
+out/
+*.jar
+*.class
+.idea/
+*.iml
+
+# Operator-provided exact artifacts and private runtime evidence.
+artifacts/
+run/
+world/
+logs/

@@ -1,0 +1,6 @@
+{
+  "id": "bluemap-securitycraft",
+  "entrypoint": "io.github.janguenter.bluemap.securitycraft.BlueMapSecurityCraftAddon",
+  "dependencies": [],
+  "soft-dependencies": []
+}

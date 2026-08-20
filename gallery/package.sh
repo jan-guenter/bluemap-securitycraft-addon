@@ -25,6 +25,8 @@ PYTHONDONTWRITEBYTECODE=1 python3 "$gallery_root/lint.py"
 
 mkdir -p "$archive_temp/root"
 cp -a "$gallery_root/datapack/." "$archive_temp/root/"
+find "$archive_temp/root" -type d -exec chmod 0755 {} +
+find "$archive_temp/root" -type f -exec chmod 0644 {} +
 find "$archive_temp/root" -exec touch -h -t 198001010000.00 {} +
 (
   cd "$archive_temp/root"

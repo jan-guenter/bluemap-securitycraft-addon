@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "status": "owner-accepted-release-candidate",
+  "version": "0.1.0-alpha.1",
+  "release_date": "2026-08-20",
+  "repository": "https://github.com/jan-guenter/bluemap-securitycraft-addon",
+  "tag": "v0.1.0-alpha.1",
+  "maven_coordinate": "io.github.jan-guenter:bluemap-securitycraft-addon:0.1.0-alpha.1",
+  "owner_accepted_staging": {
+    "commit": "8c3d4256a4a66ed605c2b296f94fc86c1f97fdf2",
+    "tree": "554956240c26807212412c3e0a5e02dde2fe3e32",
+    "production_jar_size": 33353,
+    "production_jar_sha256": "fddda968565a7a8be8aae9b5f56922015b00c636932341b75eae03da3429162a",
+    "visual_acceptance": true,
+    "retained_state_checks": "16/16 at immediate, 20-tick, and 100-tick phases"
+  },
+  "final_release_artifacts": {
+    "production_jar": {
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.jar",
+      "size": 33345,
+      "sha256": "4caccbbfaf9d413ae7d60e926069812e09da182adeb907ec2475083904d096e4"
+    },
+    "sources_jar": {
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1-sources.jar",
+      "size": 18804,
+      "sha256": "71ba8c65532c6640b28f484aa1ef2d7900e563e7f37474d855ae01db21372694"
+    },
+    "pom": {
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.pom",
+      "size": 1370,
+      "sha256": "68bcd52d29167f03065d94a11f4aa2ee2530acfe2e7572df2ed8ca88b098223e"
+    },
+    "gradle_module": {
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.module.json",
+      "size": 2859,
+      "sha256": "2d705130f94b9d5a2ce1a63577d3907f71ec0d225745df957e4398e3e7547ab9"
+    },
+    "sha256sums": {
+      "file_name": "SHA256SUMS",
+      "size": 472,
+      "sha256": "c2d13f8fe04c994491777480b8ee2e71889c8aedd5bd1b9940faa19620340878"
+    }
+  },
+  "staged_equivalence": {
+    "entry_manifest": "provenance/accepted-staging-entries.sha256",
+    "identical_non_manifest_entries": 21,
+    "permitted_difference": "META-INF/MANIFEST.MF final version only"
+  },
+  "gallery": {
+    "archive_file_name": "bluemap-securitycraft-gallery.zip",
+    "size": 4130,
+    "sha256": "b14c2a650aaa0302c48d918f23d854e92dc520f2cc944498c30c5912a13f84d5",
+    "anchors": 5,
+    "assertions_per_phase": 16,
+    "phases": 3,
+    "published_as_release_asset": false
+  },
+  "ephemeral_ci_input": {
+    "securitycraft": "CurseForge project 64760 file 8336498",
+    "size": 5193371,
+    "sha256": "75ac9e73c60caf58df7069f167dbacc00a640e1418207dff654f56a5fdb5f229",
+    "policy": "Downloaded only into the ephemeral runner, verified before use, and never bundled or uploaded."
+  },
+  "verification": {
+    "java_tests": 11,
+    "production_jar_exact_byte_gate": true,
+    "sources_jar_exact_byte_gate": true,
+    "publication_metadata_exact_byte_gate": true,
+    "gallery_archive_exact_byte_gate": true
+  },
+  "immutable_packaged_provenance": {
+    "path": "provenance/upstreams.json",
+    "note": "Implementation provenance packaged in the accepted JAR remains byte-identical. Release-only identities are kept outside the JAR."
+  }
+}

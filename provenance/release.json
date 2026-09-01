@@ -1,75 +1,84 @@
 {
   "schema_version": 1,
-  "status": "owner-accepted-release-candidate",
-  "version": "0.1.0-alpha.1",
-  "release_date": "2026-08-20",
+  "status": "unpublished-migration-candidate",
+  "published": false,
+  "version": "0.1.0-alpha.2",
+  "release_date": "2026-09-01",
   "repository": "https://github.com/jan-guenter/bluemap-securitycraft-addon",
-  "tag": "v0.1.0-alpha.1",
-  "maven_coordinate": "io.github.jan-guenter:bluemap-securitycraft-addon:0.1.0-alpha.1",
-  "owner_accepted_staging": {
-    "commit": "8c3d4256a4a66ed605c2b296f94fc86c1f97fdf2",
-    "tree": "554956240c26807212412c3e0a5e02dde2fe3e32",
-    "production_jar_size": 33353,
-    "production_jar_sha256": "fddda968565a7a8be8aae9b5f56922015b00c636932341b75eae03da3429162a",
-    "visual_acceptance": true,
-    "retained_state_checks": "16/16 at immediate, 20-tick, and 100-tick phases"
+  "tag": "v0.1.0-alpha.2",
+  "maven_coordinate": "io.github.jan-guenter:bluemap-securitycraft-addon:0.1.0-alpha.2",
+  "bluemap": {
+    "version": "5.22-feature.backport-5.23-stateless-java-web-server-46",
+    "commit": "7e07f4e74ec1e92a6ead9aa1e66054af3e133aac",
+    "api_commit": "285c9a60eff3ac2b0cab308ce1058d1565be0971"
   },
-  "final_release_artifacts": {
+  "adapter_api": {
+    "version": "0.1.0-alpha.2",
+    "commit": "e81f08bc4bfbf02d810ec8949a019130e2e61634",
+    "source_tree": "2f974c9bb2ba13888d69682f86f30f58922d30eb",
+    "source_files_compiled": 4,
+    "module_jar_installed": false,
+    "module_jar_bundled": false,
+    "module_jar_nested": false,
+    "local_adapter_package": "io.github.janguenter.bluemap.securitycraft.adapter.bluemap523"
+  },
+  "baseline_release": {
+    "version": "0.1.0-alpha.1",
+    "tag": "v0.1.0-alpha.1",
+    "commit": "a99e816581b62c71dae3975e1e677a1ff93aec64",
+    "production_jar_size": 33345,
+    "production_jar_sha256": "4caccbbfaf9d413ae7d60e926069812e09da182adeb907ec2475083904d096e4",
+    "owner_visual_acceptance": "2026-08-20"
+  },
+  "candidate_artifacts": {
     "production_jar": {
-      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.jar",
-      "size": 33345,
-      "sha256": "4caccbbfaf9d413ae7d60e926069812e09da182adeb907ec2475083904d096e4"
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.2.jar",
+      "size": 36586,
+      "sha256": "02d3e95321fd9dfec5886c34bd6fed0f4df67ad01dc6cc6afa8a1cae9ea46071"
     },
     "sources_jar": {
-      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1-sources.jar",
-      "size": 18804,
-      "sha256": "71ba8c65532c6640b28f484aa1ef2d7900e563e7f37474d855ae01db21372694"
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.2-sources.jar",
+      "size": 22028,
+      "sha256": "647bc18572f6382502106551186b6adb7f789fc3eb20c7276fa0b770ece50a34"
     },
     "pom": {
-      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.pom",
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.2.pom",
       "size": 1370,
-      "sha256": "68bcd52d29167f03065d94a11f4aa2ee2530acfe2e7572df2ed8ca88b098223e"
+      "sha256": "e8da1697f38c0d2f43739fcc590c146680a13f259583ddf610fac5e5c3ad9128"
     },
     "gradle_module": {
-      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.1.module.json",
+      "file_name": "bluemap-securitycraft-addon-0.1.0-alpha.2.module.json",
       "size": 2859,
-      "sha256": "2d705130f94b9d5a2ce1a63577d3907f71ec0d225745df957e4398e3e7547ab9"
+      "sha256": "584b59adfab61647f4bd1a5a32db11db8767cbb58f745c43a473aada5905e420"
     },
     "sha256sums": {
       "file_name": "SHA256SUMS",
       "size": 472,
-      "sha256": "c2d13f8fe04c994491777480b8ee2e71889c8aedd5bd1b9940faa19620340878"
+      "sha256": "ee7d9988a1afa024fa297dd0c0529362e2a0992465f3b0107e07f3163ab67c10"
     }
   },
-  "staged_equivalence": {
-    "entry_manifest": "provenance/accepted-staging-entries.sha256",
-    "identical_non_manifest_entries": 21,
-    "permitted_difference": "META-INF/MANIFEST.MF final version only"
-  },
-  "gallery": {
-    "archive_file_name": "bluemap-securitycraft-gallery.zip",
-    "size": 4130,
-    "sha256": "b14c2a650aaa0302c48d918f23d854e92dc520f2cc944498c30c5912a13f84d5",
-    "anchors": 5,
-    "assertions_per_phase": 16,
-    "phases": 3,
-    "published_as_release_asset": false
+  "preserved_contract": {
+    "routed_hosts": 31,
+    "gallery_anchors": 5,
+    "gallery_assertions_per_phase": 16,
+    "gallery_sources_changed": false,
+    "profiles_and_resources_changed": false,
+    "renderer_behavior_changed": false,
+    "stock_fallback_changed": false
   },
   "ephemeral_ci_input": {
-    "securitycraft": "CurseForge project 64760 file 8336498",
-    "size": 5193371,
-    "sha256": "75ac9e73c60caf58df7069f167dbacc00a640e1418207dff654f56a5fdb5f229",
-    "policy": "Downloaded only into the ephemeral runner, verified before use, and never bundled or uploaded."
+    "securitycraft_size": 5193371,
+    "securitycraft_sha256": "75ac9e73c60caf58df7069f167dbacc00a640e1418207dff654f56a5fdb5f229"
   },
   "verification": {
-    "java_tests": 11,
-    "production_jar_exact_byte_gate": true,
-    "sources_jar_exact_byte_gate": true,
-    "publication_metadata_exact_byte_gate": true,
-    "gallery_archive_exact_byte_gate": true
-  },
-  "immutable_packaged_provenance": {
-    "path": "provenance/upstreams.json",
-    "note": "Implementation provenance packaged in the accepted JAR remains byte-identical. Release-only identities are kept outside the JAR."
+    "exact_input_gate": true,
+    "adapter_api_gitlink_and_source_tree_gate": true,
+    "production_archive_boundary_gate": true,
+    "sources_archive_boundary_gate": true,
+    "local_candidate_artifact_identity_gate": true,
+    "authoritative_pr_ci_reproduction": false,
+    "local_gradle_version": "9.6.1",
+    "local_java_runtime": "21.0.12.1+1",
+    "exact_alpha_2_runtime_review": false
   }
 }

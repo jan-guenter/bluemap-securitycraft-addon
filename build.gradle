@@ -14,6 +14,10 @@ base {
     archivesName = artifact_id
 }
 
+sourceSets {
+    main.java.srcDir 'modules/bluemap-addon-adapter-api/src/main/java'
+}
+
 repositories {
     mavenCentral()
     maven {
@@ -51,6 +55,10 @@ tasks.named('jar', Jar).configure {
         into 'META-INF'
         rename { 'LICENSE-bluemap-securitycraft-addon' }
     }
+    from('modules/bluemap-addon-adapter-api/LICENSE') {
+        into 'META-INF'
+        rename { 'LICENSE-bluemap-addon-adapter-api' }
+    }
     from('NOTICE.md') {
         into 'META-INF'
         rename { 'NOTICE-bluemap-securitycraft-addon.md' }
@@ -70,6 +78,10 @@ tasks.named('sourcesJar', Jar).configure {
         into 'META-INF'
         rename { 'LICENSE-bluemap-securitycraft-addon' }
     }
+    from('modules/bluemap-addon-adapter-api/LICENSE') {
+        into 'META-INF'
+        rename { 'LICENSE-bluemap-addon-adapter-api' }
+    }
     from('NOTICE.md') {
         into 'META-INF'
         rename { 'NOTICE-bluemap-securitycraft-addon.md' }
@@ -85,6 +97,22 @@ tasks.named('sourcesJar', Jar).configure {
 
 def productionJar = tasks.named('jar', Jar).flatMap { it.archiveFile }
 def publishedSourcesJar = tasks.named('sourcesJar', Jar).flatMap { it.archiveFile }
+def sharedAdapterApiPackage =
+        'io/github/janguenter/bluemap/addon/adapter/api/bluemap523/'
+def sharedAdapterApiClasses = [
+        "${sharedAdapterApiPackage}BlueMapRuntimeCompatibility.class",
+        "${sharedAdapterApiPackage}RegistryGuard.class",
+        "${sharedAdapterApiPackage}ResourceExtensionType.class",
+        "${sharedAdapterApiPackage}SyntheticDispatch.class"
+].collect { it.toString() }
+def sharedAdapterApiSources = [
+        "${sharedAdapterApiPackage}BlueMapRuntimeCompatibility.java",
+        "${sharedAdapterApiPackage}RegistryGuard.java",
+        "${sharedAdapterApiPackage}ResourceExtensionType.java",
+        "${sharedAdapterApiPackage}SyntheticDispatch.java"
+].collect { it.toString() }
+def legacyLocalAdapterPackage =
+        'io/github/janguenter/bluemap/securitycraft/adapter/bluemap522/'
 tasks.register('verifyAcceptedProductionJar') {
     dependsOn tasks.named('jar')
     inputs.file(productionJar)
@@ -125,15 +153,6 @@ tasks.register('verifyAcceptedSourcesJar') {
     }
 }
 
-tasks.register('verifyStagedEquivalence', Exec) {
-    dependsOn tasks.named('jar')
-    inputs.file(productionJar)
-    inputs.file('provenance/accepted-staging-entries.sha256')
-    commandLine 'python3', 'tools/verify_staged_equivalence.py',
-            '--jar', productionJar.get().asFile,
-            '--entries', 'provenance/accepted-staging-entries.sha256'
-}
-
 tasks.register('verifyProductionJar') {
     dependsOn tasks.named('jar')
     inputs.file(productionJar)
@@ -147,13 +166,20 @@ tasks.register('verifyProductionJar') {
                     'assets/bluemap_securitycraft/blockstates/disguise.json',
                     'bluemap-securitycraft/profiles/securitycraft/1.10.2.1/profile.json',
                     'META-INF/LICENSE-bluemap-securitycraft-addon',
+                    'META-INF/LICENSE-bluemap-addon-adapter-api',
                     'META-INF/NOTICE-bluemap-securitycraft-addon.md',
                     'META-INF/THIRD_PARTY-bluemap-securitycraft-addon.md',
                     'META-INF/bluemap-securitycraft/upstreams.json'
-            ]
+            ] + sharedAdapterApiClasses
             def missing = required.findAll { !entries.contains(it) }
-            if (!missing.isEmpty()) {
-                throw new GradleException("Production JAR is missing: ${missing}")
+            def duplicateShared = sharedAdapterApiClasses.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
+            if (!missing.isEmpty() || !duplicateShared.isEmpty()) {
+                throw new GradleException(
+                        "Production JAR shared boundary mismatch: missing=${missing}, "
+                                + "nonUnique=${duplicateShared}"
+                )
             }
             def addon = new groovy.json.JsonSlurper().parseText(
                     zip.getInputStream(zip.getEntry('bluemap.addon.json')).getText('UTF-8')
@@ -166,6 +192,9 @@ tasks.register('verifyProductionJar') {
             }
             def forbidden = entries.findAll {
                 it.endsWith('.jar')
+                        || (it.endsWith('.class')
+                        && !it.startsWith('io/github/janguenter/bluemap/securitycraft/')
+                        && !sharedAdapterApiClasses.contains(it))
                         || it == 'META-INF/neoforge.mods.toml'
                         || it == 'fabric.mod.json'
                         || it.endsWith('.mixins.json')
@@ -173,9 +202,59 @@ tasks.register('verifyProductionJar') {
                         || it.startsWith('net/geforcemods/')
                         || it.startsWith('net/minecraft/')
                         || it.startsWith('net/neoforged/')
+                        || (it.startsWith(legacyLocalAdapterPackage) && !it.endsWith('/'))
+                        || (it.startsWith(sharedAdapterApiPackage) && !it.endsWith('/')
+                            && !sharedAdapterApiClasses.contains(it))
             }
             if (!forbidden.isEmpty()) {
                 throw new GradleException("Production JAR contains forbidden entries: ${forbidden}")
+            }
+        } finally {
+            zip.close()
+        }
+    }
+}
+
+tasks.register('verifySourcesJar') {
+    dependsOn tasks.named('sourcesJar')
+    inputs.file(publishedSourcesJar)
+    doLast {
+        def zip = new java.util.zip.ZipFile(inputs.files.singleFile)
+        try {
+            def entries = zip.entries().findAll { !it.directory }.collect { it.name }
+            def required = [
+                    'io/github/janguenter/bluemap/securitycraft/BlueMapSecurityCraftAddon.java',
+                    'io/github/janguenter/bluemap/securitycraft/adapter/bluemap523/SecurityCraftRenderer.java',
+                    'META-INF/LICENSE-bluemap-addon-adapter-api'
+            ] + sharedAdapterApiSources
+            def missing = required.findAll { !entries.contains(it) }
+            def duplicateShared = sharedAdapterApiSources.findAll { shared ->
+                entries.count { it == shared } != 1
+            }
+            def projectJava = entries.findAll { it.endsWith('.java') }
+            def foreignJava = projectJava.findAll {
+                !it.startsWith('io/github/janguenter/bluemap/securitycraft/')
+                        && !sharedAdapterApiSources.contains(it)
+            }
+            def forbidden = entries.findAll {
+                it.endsWith('.class')
+                        || it.endsWith('.jar')
+                        || it.startsWith('de/bluecolored/')
+                        || it.startsWith('net/geforcemods/')
+                        || it.startsWith('net/minecraft/')
+                        || it.startsWith('net/neoforged/')
+                        || (it.startsWith(legacyLocalAdapterPackage) && !it.endsWith('/'))
+                        || (it.startsWith(sharedAdapterApiPackage) && !it.endsWith('/')
+                            && !sharedAdapterApiSources.contains(it))
+            }
+            if (!missing.isEmpty() || !duplicateShared.isEmpty()
+                    || projectJava.isEmpty() || !foreignJava.isEmpty()
+                    || !forbidden.isEmpty()) {
+                throw new GradleException(
+                        "Sources JAR boundary mismatch: missing=${missing}, "
+                                + "nonUnique=${duplicateShared}, foreignJava=${foreignJava}, "
+                                + "forbidden=${forbidden}"
+                )
             }
         } finally {
             zip.close()
@@ -187,8 +266,8 @@ tasks.named('check').configure {
     dependsOn tasks.named('verifyAcceptedProductionJar')
     dependsOn tasks.named('verifyAcceptedSourcesJar')
     dependsOn tasks.named('verifyProductionJar')
+    dependsOn tasks.named('verifySourcesJar')
     dependsOn 'verifyPinnedArtifact'
-    dependsOn 'verifyStagedEquivalence'
 }
 
 tasks.register('verifyPinnedArtifact', Exec) {

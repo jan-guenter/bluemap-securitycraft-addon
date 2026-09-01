@@ -2,12 +2,14 @@
 
 [![CI](https://github.com/jan-guenter/bluemap-securitycraft-addon/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/jan-guenter/bluemap-securitycraft-addon/actions/workflows/ci.yml)
 
-A narrow Java 21 BlueMap 5.22 add-on that restores SecurityCraft's persisted
-disguise-module material in static maps.
+A narrow Java 21 add-on for the exact BlueMap 5.23 feature backport that
+restores SecurityCraft's persisted disguise-module material in static maps.
 
-Version `0.1.0-alpha.1` is the owner-accepted prerelease. Its production JAR
-is exactly 33,345 bytes with SHA-256
-`4caccbbfaf9d413ae7d60e926069812e09da182adeb907ec2475083904d096e4`.
+Version `0.1.0-alpha.2` is the unpublished BlueMap 5.23 migration candidate.
+Its production JAR is exactly 36,586 bytes with SHA-256
+`02d3e95321fd9dfec5886c34bd6fed0f4df67ad01dc6cc6afa8a1cae9ea46071`.
+It preserves the owner-accepted alpha.1 renderer, profile, gallery, and
+fallback behavior.
 
 The exact profile activates only for SecurityCraft `1.10.2.1` with JAR size
 5,193,371 bytes and SHA-256
@@ -25,20 +27,29 @@ other block-entity rendering remain stock or intentionally absent.
 ## Build
 
 ```bash
+git submodule update --init --recursive -- \
+  tooling/bluemap-addon-toolkit modules/bluemap-addon-adapter-api
 gradle --no-daemon \
+  -PbluemapSourcePath=/absolute/path/to/BlueMap-at-7e07f4e7 \
   -PsecurityCraftJar=/tmp/securitycraft-1.10.2.1.jar \
-  clean check build generatePomFileForAddonPublication verifyPinnedArtifact
+  -PreleaseTag=v0.1.0-alpha.2 \
+  clean check build generatePomFileForAddonPublication \
+  generateMetadataFileForAddonPublication verifyPublicationArtifacts \
+  verifyReleaseCandidate
 ```
 
-The build uses the sibling `../bluemap-backport` checkout by default. The
-production JAR is a plain BlueMap add-on for BlueMap's `packs` directory; it
-is not a NeoForge mod.
+The exact BlueMap checkout is commit
+`7e07f4e74ec1e92a6ead9aa1e66054af3e133aac` with API commit
+`285c9a60eff3ac2b0cab308ce1058d1565be0971`. The Adapter API source module is
+pinned at commit `e81f08bc4bfbf02d810ec8949a019130e2e61634`, source tree
+`2f974c9bb2ba13888d69682f86f30f58922d30eb`; exactly four helpers are compiled
+as source and no module JAR is installed, bundled, or nested. The production
+JAR is a plain BlueMap add-on for BlueMap's `packs` directory, not a NeoForge
+mod.
 
 `check` also verifies the final production and sources JARs byte-for-byte,
-proves every non-manifest production-JAR entry equals the owner-accepted
-staged JAR, and rejects any SecurityCraft artifact other than the exact pin.
-The final manifest differs from staging only by replacing the prerelease
-development version with `0.1.0-alpha.1`.
+requires the exact shared source/class roster, rejects displaced local helper
+types, and rejects any SecurityCraft artifact other than the exact pin.
 
 Tagged releases publish the production and sources JARs, POM, Gradle module
 metadata, and checksums at Maven coordinate
